@@ -3,21 +3,22 @@
 
 #define channelA 2
 #define channelB 3
+#define baudRate 9600
 
 const float ticksPerRevolution = 480.0F;
 const float wheelDiam = 9.0F / M_PI;
 const float wheelRad = wheelDiam / 2.0F;
 
-volatile byte stateA = LOW;
-volatile byte stateB = LOW;
-long rotation;
+volatile byte stateA;
+volatile byte stateB;
 long ticks;
+long rotation;
 
-float degree;
 float previousDistance;
 float currentDistance;
 float previousTimeSec;
 float currentTimeSec;
+float degree;
 float velocity;
 
 void encoderInterrupt() {
@@ -35,7 +36,7 @@ void setup() {
     pinMode(channelA, INPUT);
     attachInterrupt(digitalPinToInterrupt(channelA), encoderInterrupt, RISING);
 
-    Serial.begin(9600);
+    Serial.begin(baudRate);
     Serial.print("ticks,angle,distance,velocity");
 }
 

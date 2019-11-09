@@ -3,3 +3,7 @@
 .vscode/c_cpp_properties.json
 .vscode/launch.json
 .vscode/ipch
+
+# Encoder Class
+include/Encoder.h
+src/Encoder.cpp

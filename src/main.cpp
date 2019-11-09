@@ -3,9 +3,9 @@
 
 #define channelA 2
 #define channelB 3
-#define baudRate 9600
+#define baudRate 57600
 
-const float ticksPerRevolution = 480.0F;
+const int ticksPerRevolution = 480;
 const float wheelDiam = 9.0F / M_PI;
 const float wheelRad = wheelDiam / 2.0F;
 
@@ -13,6 +13,7 @@ volatile byte stateA;
 volatile byte stateB;
 long ticks;
 long rotation;
+int tickRem;
 
 float previousDistance;
 float currentDistance;
@@ -41,22 +42,24 @@ void setup() {
 }
 
 void loop() {
-    rotation = abs((int)(ticks / ticksPerRevolution));
-    if (rotation == 0) {
-        rotation = 1;
+    
+    if ((ticks > -480) && (ticks < 480)) {
+        tickRem = ticks;
+    } else {
+        tickRem = ticks % ticksPerRevolution;
     }
 
-    degree = ((float)ticks / (480.0F / 360.0F));
+    
+    if (tickRem <= 240) {
+        degree = (180 / 240) * tickRem;
+    } else {
+        degree = ((180 / 240) * tickRem) - 360;
+    }
+
     currentDistance = (float)ticks * (9.0F / 480.0F);
     currentTimeSec = (float)millis() / 1000.0F;
 
     velocity = (currentDistance - previousDistance) / (currentTimeSec - previousTimeSec);
-
-    if (degree > 180) {
-        degree -= (rotation * 360);
-    } else if (degree < -180) {
-        degree += (rotation * 360);
-    }
 
     Serial.print(ticks);
     Serial.print(",");
@@ -69,7 +72,7 @@ void loop() {
     previousTimeSec = currentTimeSec;
     previousDistance = currentDistance;
 
-    delay(5);
+    delay(1);
 }
 
 

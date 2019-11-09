@@ -1,5 +1,4 @@
 #include <Arduino.h>
-#include <Math.h>
 
 #define channelA 2
 #define channelB 3

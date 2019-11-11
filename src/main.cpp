@@ -12,7 +12,7 @@ volatile byte stateA;
 volatile byte stateB;
 long ticks;
 long rotation;
-int tickRem;
+int remainder;
 
 float previousDistance;
 float currentDistance;
@@ -41,18 +41,17 @@ void setup() {
 }
 
 void loop() {
-    
     if ((ticks > -480) && (ticks < 480)) {
-        tickRem = ticks;
+        remainder = ticks;
     } else {
-        tickRem = ticks % ticksPerRevolution;
+        remainder = ticks % ticksPerRevolution;
     }
 
     
-    if (tickRem <= 240) {
-        degree = (180 / 240) * tickRem;
+    if (remainder <= 240) {
+        degree = (180 / 240) * remainder;
     } else {
-        degree = ((180 / 240) * tickRem) - 360;
+        degree = ((180 / 240) * remainder) - 360;
     }
 
     currentDistance = (float)ticks * (9.0F / 480.0F);

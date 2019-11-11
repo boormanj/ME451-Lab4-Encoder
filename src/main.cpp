@@ -5,7 +5,7 @@
 #define baudRate 57600
 
 const int ticksPerRevolution = 480;
-const float wheelDiam = 9.0F / M_PI;
+const float wheelDiam = 9.0F / PI;
 const float wheelRad = wheelDiam / 2.0F;
 
 volatile byte stateA;
